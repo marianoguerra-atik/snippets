@@ -134,3 +134,5 @@ export function compileNopLang(code) {
     ),
   ];
 }
+
+test.run();

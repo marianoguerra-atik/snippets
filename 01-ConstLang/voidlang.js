@@ -27,3 +27,5 @@ test("compileVoidLang result compiles to a wasm module", async () => {
   assert.is(instance instanceof WebAssembly.Instance, true);
   assert.is(module instanceof WebAssembly.Module, true);
 });
+
+test.run();
