@@ -10,7 +10,9 @@ export function instantiateModule(arrayOfBytes) {
   // flatten the array to allow generating nested arrays
   const flatBytes = arrayOfBytes.flat(Infinity);
 
-  return WebAssembly.instantiate(Uint8Array.from(flatBytes));
+  return WebAssembly.instantiate(
+    Uint8Array.from(flatBytes),
+  );
 }
 
 export function stringToBytes(s) {
@@ -18,7 +20,12 @@ export function stringToBytes(s) {
 }
 
 export function int32ToBytes(v) {
-  return [v & 0xff, (v >> 8) & 0xff, (v >> 16) & 0xff, (v >> 24) & 0xff];
+  return [
+    v & 0xff,
+    (v >> 8) & 0xff,
+    (v >> 16) & 0xff,
+    (v >> 24) & 0xff,
+  ];
 }
 
 export const WASM_MAGIC_NUMBER = "\0asm";
@@ -61,7 +68,11 @@ export function preamble() {
 }
 
 export function typeFunctionEntry(paramTypes, returnTypes) {
-  return [TYPE_FUNCTION, withLength(paramTypes), withLength(returnTypes)];
+  return [
+    TYPE_FUNCTION,
+    withLength(paramTypes),
+    withLength(returnTypes),
+  ];
 }
 
 export function functionEntry(typeIndex) {
@@ -69,7 +80,11 @@ export function functionEntry(typeIndex) {
 }
 
 export function exportFunctionEntry(name, functionIndex) {
-  return [withLength(stringToBytes(name)), EXPORT_KIND_FUNCTION, functionIndex];
+  return [
+    withLength(stringToBytes(name)),
+    EXPORT_KIND_FUNCTION,
+    functionIndex,
+  ];
 }
 
 export function codeBody(localVars, ...instructions) {
@@ -91,11 +106,18 @@ export function compileNopLang(code) {
 
   return [
     preamble(),
-    sectionTypeAndEntries(SECTION_ID_TYPE, [typeFunctionEntry([], [])]),
+    sectionTypeAndEntries(
+      SECTION_ID_TYPE,
+      [typeFunctionEntry([], [])],
+    ),
     sectionTypeAndEntries(SECTION_ID_FUNCTION, [functionEntry(typeIndex)]),
-    sectionTypeAndEntries(SECTION_ID_EXPORT, [
-      exportFunctionEntry("main", functionIndex),
-    ]),
-    sectionTypeAndEntries(SECTION_ID_CODE, [codeBody(localsCount, END)]),
+    sectionTypeAndEntries(
+      SECTION_ID_EXPORT,
+      [exportFunctionEntry("main", functionIndex)],
+    ),
+    sectionTypeAndEntries(
+      SECTION_ID_CODE,
+      [codeBody(localsCount, END)],
+    ),
   ];
 }
