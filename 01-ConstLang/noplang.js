@@ -12,6 +12,12 @@ export function compileVoidLang(code) {
   }
 }
 
+test("compileVoidLang works for empty string", () => {
+  const bytes = compileVoidLang("");
+  assert.is(Array.isArray(bytes), true);
+  assert.throws(() => compileVoidLang("42"));
+});
+
 export function instantiateModule(arrayOfBytes) {
   // flatten the array to allow generating nested arrays
   const flatBytes = arrayOfBytes.flat(Infinity);
