@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/marianoguerra-atik/snippets/issues"
   },
-  "homepage": "https://github.com/marianoguerra-atik/snippets#readme"
+  "homepage": "https://github.com/marianoguerra-atik/snippets#readme",
+  "devDependencies": {
+    "uvu": "^0.5.6"
+  }
 }
