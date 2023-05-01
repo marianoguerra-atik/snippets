@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/marianoguerra-atik/snippets#readme",
   "devDependencies": {
+    "ohm-js": "^17.1.0",
     "uvu": "^0.5.6"
   }
 }
